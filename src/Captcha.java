@@ -13,4 +13,16 @@ public class Captcha {
 
         return captchaSum;
     }
+
+    public static int sum2(String input) {
+        int captchaSum = 0;
+        int offset = input.length() / 2;
+        for (int i = 0; i < offset; i++) {
+            if (input.charAt(i) == input.charAt(offset + i)) {
+                captchaSum += Character.digit(input.charAt(i), 10);
+            }
+        }
+
+        return captchaSum * 2;
+    }
 }
