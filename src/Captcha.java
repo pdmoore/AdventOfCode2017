@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Captcha {
     public static int sum(String inputAsString) {
         int captchaSum = 0;
@@ -24,5 +26,34 @@ public class Captcha {
         }
 
         return captchaSum * 2;
+    }
+
+    public static int checksum(int[] input) {
+        int max = input[0];
+        int min = max;
+        for (int i = 1; i < input.length; i++) {
+            if (input[i] > max) max = input[i];
+            if (input[i] < min) min = input[i];
+        }
+        return max - min;
+    }
+
+    public static int checksum(List<List<Integer>> input) {
+        int checksum = 0;
+        for (int i = 0; i < input.size(); i++) {
+            checksum += checksumLine(input.get(i));
+        }
+        return checksum;
+    }
+
+    private static int checksumLine(List<Integer> input) {
+        int max = input.get(0);
+        int min = max;
+        for (int i = 1; i < input.size(); i++) {
+            int currValue = input.get(i);
+            if (currValue > max) max = currValue;
+            if (currValue < min) min = currValue;
+        }
+        return max - min;
     }
 }
