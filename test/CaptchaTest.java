@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -170,5 +171,48 @@ public class CaptchaTest {
     public void day4_1_Passphrase_invalid() {
         String invalidPhrase = "aa bb cc dd aa";
         assertFalse(Captcha.isPassphraseValid(invalidPhrase), "invalid passphrase repeats the word 'aa'");
+    }
+
+    @Test
+    public void day4_2_Passphrase_valid() {
+        String validPhrase = "abcde fghij";
+        assertTrue(Captcha.isPassphraseValid_2(validPhrase), "now check if words are anagrams of each other");
+        assertTrue(Captcha.isPassphraseValid_2("a ab abc abd abf abj"), "now check if words are anagrams of each other");
+        assertTrue(Captcha.isPassphraseValid_2("iiii oiii ooii oooi oooo"), "now check if words are anagrams of each other");
+    }
+
+    @Test
+    public void day4_2_Passphrase_invalid() {
+        String invalidPhrase = "abcde xyz ecdab";
+        assertFalse(Captcha.isPassphraseValid_2(invalidPhrase), "invalid since 1st and 3rd word are anagrams of each other");
+        assertFalse(Captcha.isPassphraseValid_2("oiii ioii iioi iiio"), "many collisions here");
+    }
+
+    @Test
+    public void day4_1_passphrase_puzzle() throws IOException {
+        List<String> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day4.txt"));
+
+        String line;
+        int validPassphraseCount = 0;
+        while ((line = br.readLine()) != null) {
+            if (Captcha.isPassphraseValid(line)) validPassphraseCount++;
+        }
+
+        assertEquals(383, validPassphraseCount, "number of valid passphrase in input file");
+    }
+
+    @Test
+    public void day4_2_passphrase_puzzle() throws IOException {
+        List<String> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day4.txt"));
+
+        String line;
+        int validPassphraseCount = 0;
+        while ((line = br.readLine()) != null) {
+            if (Captcha.isPassphraseValid_2(line)) validPassphraseCount++;
+        }
+
+        assertEquals(265, validPassphraseCount, "number of valid passphrase in input file");
     }
 }

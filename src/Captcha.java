@@ -91,4 +91,16 @@ public class Captcha {
         }
         return wordsInPhrase.length == uniqueWords.size();
     }
+
+    public static boolean isPassphraseValid_2(String passphrase) {
+        String[] wordsInPhrase = passphrase.split(" ");
+        Set<String> uniqueWords = new TreeSet<>();
+        for (String word :
+                wordsInPhrase) {
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            uniqueWords.add(new String(chars));
+        }
+        return wordsInPhrase.length == uniqueWords.size();
+    }
 }
