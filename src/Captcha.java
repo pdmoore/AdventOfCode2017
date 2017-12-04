@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 
 public class Captcha {
     public static int sum(String inputAsString) {
@@ -55,5 +55,40 @@ public class Captcha {
             if (currValue < min) min = currValue;
         }
         return max - min;
+    }
+
+    public static int checksumLine2(List<Integer> input) {
+        List<Integer> sortedAscending = new ArrayList(input);
+        Collections.sort(sortedAscending);
+        List<Integer> sortedDescending = new ArrayList<>(sortedAscending);
+        Collections.reverse(sortedDescending);
+
+        for (int descend = 0; descend < sortedDescending.size(); descend++) {
+            for (int ascend = 0; ascend < sortedAscending.size() - descend - 1; ascend++) {
+                if (sortedDescending.get(descend) % sortedAscending.get(ascend) == 0) {
+                    return sortedDescending.get(descend) / sortedAscending.get(ascend);
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public static int checksum2(List<List<Integer>> input) {
+        int checksum = 0;
+        for (int i = 0; i < input.size(); i++) {
+            checksum += checksumLine2(input.get(i));
+        }
+        return checksum;
+    }
+
+    public static boolean isPassphraseValid(String passphrase) {
+        String[] wordsInPhrase = passphrase.split(" ");
+        Set<String> uniqueWords = new TreeSet<>();
+        for (String word :
+                wordsInPhrase) {
+            uniqueWords.add(word);
+        }
+        return wordsInPhrase.length == uniqueWords.size();
     }
 }

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CaptchaTest {
 
@@ -106,6 +108,67 @@ public class CaptchaTest {
             allLines.add(lineOfIntegers);
         }
         assertEquals(16, allLines.size());
-        assertEquals(18, Captcha.checksum(allLines), "checksum is sum of all single line checksums");
+        assertEquals(53460, Captcha.checksum(allLines), "checksum is sum of all single line checksums");
+    }
+
+    @Test
+    public void day2_2_checksumDivision() {
+        List<Integer> input = new ArrayList(Arrays.asList(5, 9, 2, 8));
+        assertEquals(4, Captcha.checksumLine2(input), "8 divides by 2 for 4");
+        input = new ArrayList(Arrays.asList(9, 4, 7, 3));
+        assertEquals(3, Captcha.checksumLine2(input), "9 divides by 3");
+        input = new ArrayList(Arrays.asList(3, 8, 6, 5));
+        assertEquals(2, Captcha.checksumLine2(input), "6 divides by 3");
+    }
+
+    @Test
+    public void day2_2_checksum_puzzle() throws Exception {
+        List<List<Integer>> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day2.txt"));
+
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            List<Integer> lineOfIntegers = new ArrayList<>();
+            Scanner s = new Scanner(line);
+            while (s.hasNextInt()) {
+                lineOfIntegers.add(s.nextInt());
+            }
+            allLines.add(lineOfIntegers);
+        }
+        assertEquals(16, allLines.size());
+        assertEquals(282, Captcha.checksum2(allLines), "checksum is sum of all single line checksums");
+    }
+
+    @Test
+    public void day3_1_gridSizeContainingTarget() {
+        boolean found = false;
+        int gridSize = 0;
+        int dimension = 0;
+        for (int i = 1; found == false; i += 2) {
+            if ((i * i) > 361527) found = true;
+            gridSize = i*i;
+            dimension = i;
+        }
+
+        assertEquals(603,dimension);
+        assertEquals(363609, gridSize);
+        assertEquals( 302, (dimension / 2) + 1, "central point location");
+    }
+
+    // should build grid as a spiral?
+    // then borrow manhattan calc from Board.java  - 1 will be in center, just calc row/col deltas & sum
+
+
+    @Test
+    public void day4_1_Passphrase_valid() {
+        String validPhrase = "aa bb cc dd ee";
+        assertTrue(Captcha.isPassphraseValid(validPhrase), "valid passphrase does not repeat any words");
+    }
+
+    @Test
+    public void day4_1_Passphrase_invalid() {
+        String invalidPhrase = "aa bb cc dd aa";
+        assertFalse(Captcha.isPassphraseValid(invalidPhrase), "invalid passphrase repeats the word 'aa'");
     }
 }
