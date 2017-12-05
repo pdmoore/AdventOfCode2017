@@ -222,10 +222,21 @@ public class AdventOfCode2017Test {
             allLines.add(Integer.parseInt(line));
         }
 
-        int[] maze = new int[allLines.size()];
+        int[] maze   = new int[allLines.size()];
+        int[] maze_2 = new int[allLines.size()];
         for (int i = 0; i < maze.length; i++) {
             maze[i] = allLines.get(i);
+            maze_2[i] = maze[i];
         }
         assertEquals(378980, AdventOfCode2017.mazeSteps(maze));
+        assertEquals(26889114, AdventOfCode2017.mazeSteps_2(maze_2));
     }
+
+    @Test
+    public void day5_2_maze() {
+        int[] maze = new int[] { 0, 3, 0, 1, -3 };
+        int actual = AdventOfCode2017.mazeSteps_2(maze);
+        assertEquals(10, actual);
+    }
+
 }

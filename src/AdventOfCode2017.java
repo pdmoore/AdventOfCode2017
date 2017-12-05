@@ -115,4 +115,18 @@ public class AdventOfCode2017 {
         }
         return steps;
     }
+
+    public static int mazeSteps_2(int[] maze) {
+        int currentIndex = 0;
+        int steps = 0;
+        while (currentIndex >= 0 && currentIndex < maze.length) {
+            steps++;
+            int prevIndex = currentIndex;
+            int offset = maze[currentIndex];
+            currentIndex += offset;
+            if (offset >= 3) maze[prevIndex] -= 1;
+            else maze[prevIndex] += 1;
+        }
+        return steps;
+    }
 }
