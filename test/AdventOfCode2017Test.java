@@ -204,4 +204,28 @@ public class AdventOfCode2017Test {
 
         assertEquals(265, validPassphraseCount, "number of valid passphrase in input file");
     }
+
+    @Test
+    public void day5_1_mae() {
+        int[] maze = new int[] { 0, 3, 0, 1, -3 };
+        int actual = AdventOfCode2017.mazeSteps(maze);
+        assertEquals(5, actual);
+    }
+
+    @Test
+    public void day5_1_puzzle() throws IOException {
+        List<Integer> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day5.txt"));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            allLines.add(Integer.parseInt(line));
+        }
+
+        int[] maze = new int[allLines.size()];
+        for (int i = 0; i < maze.length; i++) {
+            maze[i] = allLines.get(i);
+        }
+        assertEquals(378980, AdventOfCode2017.mazeSteps(maze));
+    }
 }

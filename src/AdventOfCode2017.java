@@ -103,4 +103,16 @@ public class AdventOfCode2017 {
         }
         return wordsInPhrase.length == uniqueWords.size();
     }
+
+    public static int mazeSteps(int[] maze) {
+        int currentIndex = 0;
+        int steps = 0;
+        while (currentIndex >= 0 && currentIndex < maze.length) {
+            steps++;
+            int prevIndex = currentIndex;
+            currentIndex += maze[currentIndex];
+            maze[prevIndex] += 1;
+        }
+        return steps;
+    }
 }
