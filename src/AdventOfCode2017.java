@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Captcha {
+public class AdventOfCode2017 {
     public static int sum(String inputAsString) {
         int captchaSum = 0;
 
