@@ -1,3 +1,4 @@
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -250,13 +251,23 @@ public class AdventOfCode2017Test {
     public void day6_1_redistributeAndRemember() {
         int[] block = new int[] { 0, 2, 7, 0 };
         int expected = 5;
-        assertEquals(expected, AdventOfCode2017.redistributeUntilCycle(block));
+        assertEquals(expected, AdventOfCode2017.redistributeUntilCycle(block).stepCount);
     }
 
     @Test
     public void day6_1_puzzle() {
         int[] block = new int[] { 5, 1, 10, 0, 1,	7, 13, 14, 3, 12, 8, 10, 7, 12, 0, 6 };
-        assertEquals(5042, AdventOfCode2017.redistributeUntilCycle(block));
+        assertEquals(5042, AdventOfCode2017.redistributeUntilCycle(block).stepCount);
+    }
+
+    @Test
+    @Ignore
+    public void day6_2_puzzle() {
+        // need to store the step that a pattern occurs
+        // then need to detect when loop occurs and return the diff of when loop detected and when match was first entered
+
+
+
     }
 
 }

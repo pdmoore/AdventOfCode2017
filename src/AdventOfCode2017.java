@@ -152,7 +152,11 @@ public class AdventOfCode2017 {
         return maxIndex;
     }
 
-    public static int redistributeUntilCycle(int[] block) {
+    public static class Day6Result {
+        public int stepCount;
+    }
+
+    public static Day6Result redistributeUntilCycle(int[] block) {
         List<List<Integer>> bankConfiguration = new ArrayList<>();
         int stepCount = 0;
 
@@ -164,7 +168,9 @@ public class AdventOfCode2017 {
             intList = convertIntArrayToList(block);
         }
 
-        return stepCount;
+        Day6Result result = new Day6Result();
+        result.stepCount = stepCount;
+        return result;
     }
 
     private static List<Integer> convertIntArrayToList(int[] block) {
