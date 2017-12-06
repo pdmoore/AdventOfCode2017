@@ -258,16 +258,14 @@ public class AdventOfCode2017Test {
     public void day6_1_puzzle() {
         int[] block = new int[] { 5, 1, 10, 0, 1,	7, 13, 14, 3, 12, 8, 10, 7, 12, 0, 6 };
         assertEquals(5042, AdventOfCode2017.redistributeUntilCycle(block).stepCount);
+        assertEquals(1086, AdventOfCode2017.redistributeUntilCycle(block).cycleCount);
     }
 
     @Test
-    @Ignore
-    public void day6_2_puzzle() {
-        // need to store the step that a pattern occurs
-        // then need to detect when loop occurs and return the diff of when loop detected and when match was first entered
-
-
-
+    public void day6_1_redistributeAnDetectCycle() {
+        int[] block = new int[] { 0, 2, 7, 0 };
+        int expected = 4;
+        assertEquals(expected, AdventOfCode2017.redistributeUntilCycle(block).cycleCount);
     }
 
 }

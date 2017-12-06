@@ -154,23 +154,37 @@ public class AdventOfCode2017 {
 
     public static class Day6Result {
         public int stepCount;
+        public int cycleCount;
     }
 
     public static Day6Result redistributeUntilCycle(int[] block) {
         List<List<Integer>> bankConfiguration = new ArrayList<>();
+        Map<Integer, List<Integer>> seenBlocks = new HashMap<>();
         int stepCount = 0;
 
         List<Integer> intList = convertIntArrayToList(block);
         while (bankConfiguration.contains(intList) == false) {
             bankConfiguration.add(intList);
             stepCount++;
+
+            seenBlocks.put(stepCount, intList);
+
             redistribute(block);
             intList = convertIntArrayToList(block);
         }
 
         Day6Result result = new Day6Result();
         result.stepCount = stepCount;
+        result.cycleCount = stepCount - whatStepWasValueFirstAdded(seenBlocks, intList) + 1;
         return result;
+    }
+
+    private static int whatStepWasValueFirstAdded(Map<Integer, List<Integer>> mapOfIntegerList, List<Integer> target) {
+        for (Map.Entry<Integer, List<Integer>> entry : mapOfIntegerList.entrySet()) {
+            if (Arrays.equals(target.toArray(), entry.getValue().toArray())) return entry.getKey().intValue();
+        }
+
+        return -1;
     }
 
     private static List<Integer> convertIntArrayToList(int[] block) {
