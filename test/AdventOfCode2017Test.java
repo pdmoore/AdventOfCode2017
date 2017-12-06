@@ -239,4 +239,24 @@ public class AdventOfCode2017Test {
         assertEquals(10, actual);
     }
 
+    @Test
+    public void day6_1_redistribute() {
+        int[] blocks = new int[] { 0, 2, 7, 0 };
+        int[] expected = new int[] { 2, 4, 1, 2 };
+        assertArrayEquals(expected, AdventOfCode2017.redistribute(blocks));
+    }
+
+    @Test
+    public void day6_1_redistributeAndRemember() {
+        int[] block = new int[] { 0, 2, 7, 0 };
+        int expected = 5;
+        assertEquals(expected, AdventOfCode2017.redistributeUntilCycle(block));
+    }
+
+    @Test
+    public void day6_1_puzzle() {
+        int[] block = new int[] { 5, 1, 10, 0, 1,	7, 13, 14, 3, 12, 8, 10, 7, 12, 0, 6 };
+        assertEquals(5042, AdventOfCode2017.redistributeUntilCycle(block));
+    }
+
 }

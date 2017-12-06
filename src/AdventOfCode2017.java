@@ -129,4 +129,49 @@ public class AdventOfCode2017 {
         }
         return steps;
     }
+
+    public static int[] redistribute(int[] blocks) {
+        int maxIndex = findMaxIndex(blocks);
+        int redistributeCout = blocks[maxIndex];
+        blocks[maxIndex] = 0;
+        int currentIndex = maxIndex + 1;
+        while (redistributeCout > 0) {
+            if (currentIndex == blocks.length) currentIndex = 0;
+            blocks[currentIndex] += 1;
+            redistributeCout--;
+            currentIndex++;
+        }
+        return blocks;
+    }
+
+    private static int findMaxIndex(int[] blocks) {
+        int maxIndex = 0;
+        for (int i = 1; i < blocks.length; i++) {
+            if (blocks[i] > blocks[maxIndex]) maxIndex = i;
+        }
+        return maxIndex;
+    }
+
+    public static int redistributeUntilCycle(int[] block) {
+        List<List<Integer>> bankConfiguration = new ArrayList<>();
+        int stepCount = 0;
+
+        List<Integer> intList = convertIntArrayToList(block);
+        while (bankConfiguration.contains(intList) == false) {
+            bankConfiguration.add(intList);
+            stepCount++;
+            redistribute(block);
+            intList = convertIntArrayToList(block);
+        }
+
+        return stepCount;
+    }
+
+    private static List<Integer> convertIntArrayToList(int[] block) {
+        List<Integer> intlist = new ArrayList<>();
+        for (int i = 0; i < block.length; i++) {
+            intlist.add(block[i]);
+        }
+        return intlist;
+    }
 }
