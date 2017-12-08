@@ -268,4 +268,5 @@ public class AdventOfCode2017Test {
         assertEquals(expected, AdventOfCode2017.redistributeUntilCycle(block).cycleCount);
     }
 
+
 }
