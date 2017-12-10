@@ -219,4 +219,24 @@ public class AdventOfCode2017 {
         }
         return totalScore;
     }
+
+    public static int processStream_2(String stream) {
+        int garbageCount = 0;
+        boolean handlingGarbage = false;
+        for (int i = 0; i < stream.length(); i++) {
+            char current = stream.charAt(i);
+            if (current == '!') {
+                i++;
+            } else {
+
+                if (handlingGarbage == false) {
+                    if (current == '<') handlingGarbage = true;
+                } else {
+                    if (current == '>') handlingGarbage = false;
+                    else garbageCount++;
+                }
+            }
+        }
+        return garbageCount;
+    }
 }

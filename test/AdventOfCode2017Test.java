@@ -305,6 +305,26 @@ public class AdventOfCode2017Test {
             actual = AdventOfCode2017.processStream(line);
         }
         assertEquals(7616, actual);
-
     }
+
+    @Test
+    public void day9_2_countGarbage() {
+        assertEquals(17, AdventOfCode2017.processStream_2("<random characters>"));
+        assertEquals(3, AdventOfCode2017.processStream_2("<<<<>"));
+        assertEquals(10, AdventOfCode2017.processStream_2("<{o\"i!a,<{i<a>"));
+    }
+
+    @Test
+    public void day9_2_puzzle() throws IOException {
+        List<String> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day9.txt"));
+
+        String line;
+        int actual = 0;
+        while ((line = br.readLine()) != null) {
+            actual = AdventOfCode2017.processStream_2(line);
+        }
+        assertEquals(3838, actual);
+    }
+
 }
