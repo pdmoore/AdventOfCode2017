@@ -2,6 +2,7 @@ import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -268,5 +269,42 @@ public class AdventOfCode2017Test {
         assertEquals(expected, AdventOfCode2017.redistributeUntilCycle(block).cycleCount);
     }
 
+    @Test
+    public void day9_1_OneGroup() {
+        String stream = "{}";
+        assertEquals(1, AdventOfCode2017.processStream(stream));
+        assertEquals(1, AdventOfCode2017.processStream("{<a>,<a>,<a>,<a>}"));
+    }
 
+    @Test
+    public void day9_1_MultipleGroups() {
+        assertEquals(6, AdventOfCode2017.processStream("{{{}}}"));
+        assertEquals(5, AdventOfCode2017.processStream("{{},{}}"));
+        assertEquals(16, AdventOfCode2017.processStream("{{{},{},{{}}}}"));
+    }
+
+    @Test
+    public void day9_1_handleGarbage() {
+        assertEquals(1, AdventOfCode2017.processStream("{<a>,<a>,<a>,<a>}"));
+        assertEquals(9, AdventOfCode2017.processStream("{{<ab>},{<ab>},{<ab>},{<ab>}}"));
+    }
+
+    @Test public void day9_1_handleIgnore() {
+        assertEquals(9, AdventOfCode2017.processStream("{{<!!>},{<!!>},{<!!>},{<!!>}}"));
+        assertEquals(3, AdventOfCode2017.processStream("{{<a!>},{<a!>},{<a!>},{<ab>}}"));
+    }
+
+    @Test
+    public void day9_1_puzzle() throws IOException {
+        List<String> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day9.txt"));
+
+        String line;
+        int actual = 0;
+        while ((line = br.readLine()) != null) {
+            actual = AdventOfCode2017.processStream(line);
+        }
+        assertEquals(7616, actual);
+
+    }
 }

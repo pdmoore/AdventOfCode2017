@@ -194,4 +194,29 @@ public class AdventOfCode2017 {
         }
         return intlist;
     }
+
+    public static int processStream(String stream) {
+        int totalScore = 0;
+        int indentCount = 0;
+        boolean handlingGarbage = false;
+        for (int i = 0; i < stream.length(); i++) {
+            char current = stream.charAt(i);
+            if (current == '!') {
+                i++;
+            } else {
+
+                if (handlingGarbage == false) {
+                    if (current == '<') handlingGarbage = true;
+                    else if (current == '{') indentCount++;
+                    else if (current == '}') {
+                        totalScore += indentCount;
+                        indentCount--;
+                    }
+                } else {
+                    if (current == '>') handlingGarbage = false;
+                }
+            }
+        }
+        return totalScore;
+    }
 }
