@@ -152,6 +152,41 @@ public class AdventOfCode2017 {
         return maxIndex;
     }
 
+    public static int[] day10_reverse(int[] input, int currentPosition, int segmentLength) {
+        int[] subsegment = new int[segmentLength];
+        int newSegmentIndex = 0;
+        int i = currentPosition;
+        while (newSegmentIndex < segmentLength) {
+            subsegment[newSegmentIndex++] = input[i++];
+            if (i >= input.length) i = 0;
+        }
+
+        int copySegmentIndex = currentPosition;
+        for (int j = segmentLength - 1; j >= 0; j--) {
+            input[copySegmentIndex++] = subsegment[j];
+            if (copySegmentIndex >= input.length) copySegmentIndex = 0;
+        }
+        return input;
+    }
+
+    public static int[] day10_knotHash(int length, int[] inputLengths) {
+        int[] output = new int[length];
+        for (int i = 0; i < length; i++) {
+            output[i] = i;
+        }
+
+        int currentPosition = 0;
+        int skipSize = 0;
+        for (int eachLength = 0; eachLength < inputLengths.length; eachLength++) {
+            day10_reverse(output, currentPosition, inputLengths[eachLength]);
+            currentPosition += inputLengths[eachLength] + skipSize;
+            if (currentPosition > length) currentPosition -= length;
+            skipSize++;
+        }
+
+        return output;
+    }
+
     public static class Day6Result {
         public int stepCount;
         public int cycleCount;

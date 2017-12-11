@@ -1,8 +1,7 @@
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 
+import java.awt.event.AdjustmentEvent;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -327,4 +326,48 @@ public class AdventOfCode2017Test {
         assertEquals(3838, actual);
     }
 
+    @Test
+    public void day10_1_Position_0() {
+        int[] input = new int[] { 0, 1, 2, 3, 4 };
+        int[] expected = new int[] { 2, 1, 0, 3, 4 };
+        assertArrayEquals(expected, AdventOfCode2017.day10_reverse(input,0,3));
+    }
+
+    @Test
+    public void day10_1_PositionWraps() {
+        int[] input = new int[] { 2, 1, 0, 3, 4 };
+        int[] expected = new int[] { 4, 3, 0, 1, 2 };
+        assertArrayEquals(expected, AdventOfCode2017.day10_reverse(input,3,4));
+    }
+
+    @Test
+    public void day10_1_LengthOf_1() {
+        int[] input = new int[] { 4, 3, 0, 1, 2 };
+        int[] expected = new int[] { 4, 3, 0, 1, 2 };
+        assertArrayEquals(expected, AdventOfCode2017.day10_reverse(input,1,1));
+    }
+
+    @Test
+    public void day10_1_LengthOfEntireInput() {
+        int[] input = new int[] { 4, 3, 0, 1, 2 };
+        int[] expected = new int[] { 3, 4, 2, 1, 0 };
+        assertArrayEquals(expected, AdventOfCode2017.day10_reverse(input, 1, 5));
+    }
+
+    @Test
+    public void day10_knotHash() {
+        int length = 5;
+        int inputLengths[] = new int[] { 3, 4, 1, 5 };
+        int expected[] = new int[] { 3, 4, 2, 1, 0 };
+        assertArrayEquals(expected, AdventOfCode2017.day10_knotHash(length, inputLengths));
+    }
+
+    @Test
+    public void day10_1_puzzle() {
+        int length = 256;
+        int inputLengths[] = new int[] { 70,66,255,2,48,0,54,48,80,141,244,254,160,108,1,41 };
+        int[] actual = AdventOfCode2017.day10_knotHash(length, inputLengths);
+        int product = actual[0] * actual[1];
+        assertEquals(66, product);
+    }
 }
