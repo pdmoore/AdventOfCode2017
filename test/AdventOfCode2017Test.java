@@ -147,8 +147,6 @@ public class AdventOfCode2017Test {
         assertEquals( 302, (dimension / 2) + 1, "central point location");
     }
 
-    // should build grid as a spiral?
-    // then borrow manhattan calc from Board.java  - 1 will be in center, just calc row/col deltas & sum
     @Test
     public void day3_1_nextLargerGrid() {
         int[][] startWith = new int[][] {
@@ -164,6 +162,42 @@ public class AdventOfCode2017Test {
                 {21, 22, 23, 24, 25}
         };
         assertArrayEquals(expected, AdventOfCode2017.day3_growGrid(startWith));
+    }
+
+    @Test
+    public void day3_1_growGridUntilItContainsTargetValue() {
+        int[][] startWith = new int[][]{
+                {5, 4, 3},
+                {6, 1, 2},
+                {7, 8, 9}
+        };
+        int targetValue = 361527;
+        assertEquals(603, AdventOfCode2017.day3_sizeOfGridContaining(targetValue, startWith));
+    }
+
+    @Test
+    public void day3_1_ManhattanDistance_SimpleGrid() {
+        int[][] startWith = new int[][]{
+                {5, 4, 3},
+                {6, 1, 2},
+                {7, 8, 9}
+        };
+        int targetValue = 22;
+        assertEquals(3, AdventOfCode2017.day3_1_puzzle(targetValue, startWith));
+
+        targetValue = 17;
+        assertEquals(4, AdventOfCode2017.day3_1_puzzle(targetValue, startWith));
+    }
+
+    @Test
+    public void day3_1_ManhattanDistance_puzzle() {
+        int[][] startWith = new int[][]{
+                {5, 4, 3},
+                {6, 1, 2},
+                {7, 8, 9}
+        };
+        int targetValue = 361527;
+        assertEquals(326, AdventOfCode2017.day3_1_puzzle(targetValue, startWith));
     }
 
 

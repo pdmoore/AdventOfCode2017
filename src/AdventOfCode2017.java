@@ -216,6 +216,37 @@ public class AdventOfCode2017 {
         return nextGrid;
     }
 
+    public static int day3_sizeOfGridContaining(int targetValue, int[][] startWith) {
+        int[][] nextGrid = day3_growGrid(startWith);
+        while (nextGrid[nextGrid.length - 1][nextGrid.length - 1] < targetValue) {
+            nextGrid = day3_growGrid(nextGrid);
+        }
+        return nextGrid.length;
+    }
+
+    public static int day3_1_puzzle(int targetValue, int[][] startWith) {
+        // grow the grid until target is contained
+        int[][] nextGrid = day3_growGrid(startWith);
+        while (nextGrid[nextGrid.length - 1][nextGrid.length - 1] < targetValue) {
+            nextGrid = day3_growGrid(nextGrid);
+        }
+
+        // locate the target within grown grid
+        int i = 0;
+        int j = 0;
+        int distance = 0;
+        int centerCoord = (nextGrid.length / 2);
+        for ( ; i <= nextGrid.length - 1; i++) {
+            for (j = 0; j <= nextGrid.length - 1; j++) {
+                if (nextGrid[i][j] == targetValue) {
+                    distance = Math.abs(centerCoord - i) + Math.abs(centerCoord - j);
+                    return distance;
+                }
+            }
+        }
+        return 0;
+    }
+
     public static class Day6Result {
         public int stepCount;
         public int cycleCount;
