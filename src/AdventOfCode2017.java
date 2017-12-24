@@ -187,6 +187,35 @@ public class AdventOfCode2017 {
         return output;
     }
 
+    public static int[][] day3_growGrid(int[][] startWith) {
+        int previousSize = startWith[0].length;
+        int nextGrid[][] = new int[previousSize + 2][previousSize + 2];
+        //copy the existing one into the middle of the new one
+        for (int i = 0; i < previousSize; i++) {
+            for (int j = 0; j < previousSize; j++) {
+                nextGrid[i+1][j+1] = startWith[i][j];
+            }
+        }
+        int nextVal = startWith[previousSize - 1][previousSize - 1] + 1;
+        //fill in the rightmost edge
+        for (int k = previousSize; k > 0; k--) {
+            nextGrid[k][previousSize + 1] = nextVal++;
+        }
+        //fill in the topmost line
+        for (int k = previousSize + 1; k >= 0; k--) {
+            nextGrid[0][k] = nextVal++;
+        }
+        // fill in leftmost edge
+        for (int k = 1; k <= previousSize; k++) {
+            nextGrid[k][0] = nextVal++;
+        }
+        //fill in bottom edge
+        for (int k = 0; k <= previousSize + 1; k++) {
+            nextGrid[previousSize + 1][k] = nextVal++;
+        }
+        return nextGrid;
+    }
+
     public static class Day6Result {
         public int stepCount;
         public int cycleCount;

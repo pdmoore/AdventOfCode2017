@@ -149,6 +149,22 @@ public class AdventOfCode2017Test {
 
     // should build grid as a spiral?
     // then borrow manhattan calc from Board.java  - 1 will be in center, just calc row/col deltas & sum
+    @Test
+    public void day3_1_nextLargerGrid() {
+        int[][] startWith = new int[][] {
+                {5, 4, 3},
+                {6, 1, 2},
+                {7, 8, 9}
+        };
+        int[][] expected = new int[][] {
+                {17, 16, 15, 14, 13},
+                {18,  5,  4,  3, 12},
+                {19,  6,  1,  2, 11},
+                {20,  7,  8,  9, 10},
+                {21, 22, 23, 24, 25}
+        };
+        assertArrayEquals(expected, AdventOfCode2017.day3_growGrid(startWith));
+    }
 
 
     @Test
@@ -368,6 +384,6 @@ public class AdventOfCode2017Test {
         int inputLengths[] = new int[] { 70,66,255,2,48,0,54,48,80,141,244,254,160,108,1,41 };
         int[] actual = AdventOfCode2017.day10_knotHash(length, inputLengths);
         int product = actual[0] * actual[1];
-        assertEquals(66, product);
+        assertEquals(7888, product);
     }
 }
