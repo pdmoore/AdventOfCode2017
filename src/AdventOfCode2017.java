@@ -234,7 +234,8 @@ public class AdventOfCode2017 {
             int left = nextGrid[k][previousSize];
             int diagonal_above = nextGrid[k - 1][previousSize];
             int below = nextGrid[k + 1][previousSize + 1];
-            nextGrid[k][previousSize + 1] = diagonal_down + left + diagonal_above + below;
+            int nextVal = diagonal_down + left + diagonal_above + below;
+            nextGrid[k][previousSize + 1] = nextVal;
         }
         //fill in the topmost line
         for (int k = previousSize + 1; k >= 0; k--) {
@@ -242,7 +243,8 @@ public class AdventOfCode2017 {
             int diagonal_left = (k-1 >= 0) ? nextGrid[1][k-1] : 0;
             int diagonal_right = (k <= previousSize) ? nextGrid[1][k+1] : 0;
             int right = (k <= previousSize) ? nextGrid[0][k+1] : 0;
-            nextGrid[0][k] = diagonal_left + below + diagonal_right + right;
+            int nextVal = diagonal_left + below + diagonal_right + right;
+            nextGrid[0][k] = nextVal;
         }
         // fill in leftmost edge
         for (int k = 1; k <= previousSize; k++) {
@@ -250,7 +252,8 @@ public class AdventOfCode2017 {
             int above = nextGrid[k-1][0];
             int diagonal_above = nextGrid[k-1][1];
             int diagonal_below = nextGrid[k+1][1];
-            nextGrid[k][0] = diagonal_above + right + diagonal_below + above;
+            int nextVal = diagonal_above + right + diagonal_below + above;
+            nextGrid[k][0] = nextVal;
         }
         //fill in bottom edge
         for (int k = 0; k <= previousSize + 1; k++) {
@@ -258,7 +261,8 @@ public class AdventOfCode2017 {
             int above = nextGrid[previousSize][k];
             int diagonal_left = (k-1 >= 0) ? nextGrid[previousSize][k-1] : 0;
             int diagonal_right = (k <= previousSize) ? nextGrid[previousSize][k+1] : 0;
-            nextGrid[previousSize + 1][k] = left + diagonal_left + above + diagonal_right;
+            int nextVal = left + diagonal_left + above + diagonal_right;
+            nextGrid[previousSize + 1][k] = nextVal;
         }
 
         return nextGrid;
@@ -294,6 +298,54 @@ public class AdventOfCode2017 {
             }
         }
         return 0;
+    }
+
+    public static int[][] day3_huntForTarget(int target, int[][] seed) {
+        int[][] nextGrid = createLargerGridWithEmptyEdges(seed);
+
+        int previousSize = seed[0].length;
+        //fill in the rightmost edge
+        for (int k = previousSize; k > 0; k--) {
+            int diagonal_down = nextGrid[k + 1][previousSize];
+            int left = nextGrid[k][previousSize];
+            int diagonal_above = nextGrid[k - 1][previousSize];
+            int below = nextGrid[k + 1][previousSize + 1];
+            int nextVal = diagonal_down + left + diagonal_above + below;
+            if (nextVal > target) throw new RuntimeException("" + nextVal);
+            nextGrid[k][previousSize + 1] = nextVal;
+        }
+        //fill in the topmost line
+        for (int k = previousSize + 1; k >= 0; k--) {
+            int below = nextGrid[1][k];
+            int diagonal_left = (k-1 >= 0) ? nextGrid[1][k-1] : 0;
+            int diagonal_right = (k <= previousSize) ? nextGrid[1][k+1] : 0;
+            int right = (k <= previousSize) ? nextGrid[0][k+1] : 0;
+            int nextVal = diagonal_left + below + diagonal_right + right;
+            if (nextVal > target) throw new RuntimeException("" + nextVal);
+            nextGrid[0][k] = nextVal;
+        }
+        // fill in leftmost edge
+        for (int k = 1; k <= previousSize; k++) {
+            int right = nextGrid[k][1];
+            int above = nextGrid[k-1][0];
+            int diagonal_above = nextGrid[k-1][1];
+            int diagonal_below = nextGrid[k+1][1];
+            int nextVal = diagonal_above + right + diagonal_below + above;
+            if (nextVal > target) throw new RuntimeException("" + nextVal);
+            nextGrid[k][0] = nextVal;
+        }
+        //fill in bottom edge
+        for (int k = 0; k <= previousSize + 1; k++) {
+            int left = (k-1 >= 0) ? nextGrid[previousSize + 1][k-1] : 0;
+            int above = nextGrid[previousSize][k];
+            int diagonal_left = (k-1 >= 0) ? nextGrid[previousSize][k-1] : 0;
+            int diagonal_right = (k <= previousSize) ? nextGrid[previousSize][k+1] : 0;
+            int nextVal = left + diagonal_left + above + diagonal_right;
+            if (nextVal > target) throw new RuntimeException("" + nextVal);
+            nextGrid[previousSize + 1][k] = nextVal;
+        }
+
+        return nextGrid;
     }
 
     public static class Day6Result {

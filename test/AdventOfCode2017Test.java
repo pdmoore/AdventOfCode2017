@@ -211,7 +211,15 @@ public class AdventOfCode2017Test {
         assertArrayEquals(expected, AdventOfCode2017.day3_growGridBySum(seed));
     }
 
-
+    @Test
+    public void day3_2_puzzle() {
+        int[][] seed = new int[][] { {1} };
+        int[][] nextGrid = AdventOfCode2017.day3_growGridBySum(seed);
+        int target = 361527;
+        while (true) {
+            nextGrid = AdventOfCode2017.day3_huntForTarget(target, nextGrid);
+        }
+    }
 
     @Test
     public void day4_1_Passphrase_valid() {
