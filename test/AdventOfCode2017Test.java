@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.AdjustmentEvent;
@@ -148,6 +149,17 @@ public class AdventOfCode2017Test {
     }
 
     @Test
+    public void day3_1_growGridFromSingleItemSeed() {
+        int[][] seed = new int[][] { {1} };
+        int[][] expected = new int[][] {
+                { 5, 4, 3 },
+                { 6, 1, 2 },
+                { 7, 8, 9 }
+        };
+        assertArrayEquals(expected, AdventOfCode2017.day3_growGrid(seed));
+    }
+
+    @Test
     public void day3_1_nextLargerGrid() {
         int[][] startWith = new int[][] {
                 {5, 4, 3},
@@ -166,22 +178,14 @@ public class AdventOfCode2017Test {
 
     @Test
     public void day3_1_growGridUntilItContainsTargetValue() {
-        int[][] startWith = new int[][]{
-                {5, 4, 3},
-                {6, 1, 2},
-                {7, 8, 9}
-        };
+        int[][] startWith = new int[][]{ { 1 } };
         int targetValue = 361527;
         assertEquals(603, AdventOfCode2017.day3_sizeOfGridContaining(targetValue, startWith));
     }
 
     @Test
     public void day3_1_ManhattanDistance_SimpleGrid() {
-        int[][] startWith = new int[][]{
-                {5, 4, 3},
-                {6, 1, 2},
-                {7, 8, 9}
-        };
+        int[][] startWith = new int[][]{ { 1 } };
         int targetValue = 22;
         assertEquals(3, AdventOfCode2017.day3_1_puzzle(targetValue, startWith));
 
@@ -191,14 +195,22 @@ public class AdventOfCode2017Test {
 
     @Test
     public void day3_1_ManhattanDistance_puzzle() {
-        int[][] startWith = new int[][]{
-                {5, 4, 3},
-                {6, 1, 2},
-                {7, 8, 9}
-        };
+        int[][] startWith = new int[][]{ { 1 } };
         int targetValue = 361527;
         assertEquals(326, AdventOfCode2017.day3_1_puzzle(targetValue, startWith));
     }
+
+    @Test
+    public void day3_2_growGridFromSingleItemSeed() {
+        int[][] seed = new int[][] { {1} };
+        int[][] expected = new int[][] {
+                {  5,  4,  2 },
+                { 10,  1,  1 },
+                { 11, 23, 25 }
+        };
+        assertArrayEquals(expected, AdventOfCode2017.day3_growGridBySum(seed));
+    }
+
 
 
     @Test

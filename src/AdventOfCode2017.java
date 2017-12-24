@@ -187,8 +187,9 @@ public class AdventOfCode2017 {
         return output;
     }
 
-    public static int[][] day3_growGrid(int[][] startWith) {
+    private static int[][] createLargerGridWithEmptyEdges(int[][] startWith) {
         int previousSize = startWith[0].length;
+
         int nextGrid[][] = new int[previousSize + 2][previousSize + 2];
         //copy the existing one into the middle of the new one
         for (int i = 0; i < previousSize; i++) {
@@ -196,6 +197,13 @@ public class AdventOfCode2017 {
                 nextGrid[i+1][j+1] = startWith[i][j];
             }
         }
+        return nextGrid;
+    }
+
+    public static int[][] day3_growGrid(int[][] startWith) {
+        int[][] nextGrid = createLargerGridWithEmptyEdges(startWith);
+
+        int previousSize = startWith[0].length;
         int nextVal = startWith[previousSize - 1][previousSize - 1] + 1;
         //fill in the rightmost edge
         for (int k = previousSize; k > 0; k--) {
@@ -215,6 +223,47 @@ public class AdventOfCode2017 {
         }
         return nextGrid;
     }
+
+    public static int[][] day3_growGridBySum(int[][] seed) {
+        int[][] nextGrid = createLargerGridWithEmptyEdges(seed);
+
+        int previousSize = seed[0].length;
+        //fill in the rightmost edge
+        for (int k = previousSize; k > 0; k--) {
+            int diagonal_down = nextGrid[k + 1][previousSize];
+            int left = nextGrid[k][previousSize];
+            int diagonal_above = nextGrid[k - 1][previousSize];
+            int below = nextGrid[k + 1][previousSize + 1];
+            nextGrid[k][previousSize + 1] = diagonal_down + left + diagonal_above + below;
+        }
+        //fill in the topmost line
+        for (int k = previousSize + 1; k >= 0; k--) {
+            int below = nextGrid[1][k];
+            int diagonal_left = (k-1 >= 0) ? nextGrid[1][k-1] : 0;
+            int diagonal_right = (k <= previousSize) ? nextGrid[1][k+1] : 0;
+            int right = (k <= previousSize) ? nextGrid[0][k+1] : 0;
+            nextGrid[0][k] = diagonal_left + below + diagonal_right + right;
+        }
+        // fill in leftmost edge
+        for (int k = 1; k <= previousSize; k++) {
+            int right = nextGrid[k][1];
+            int above = nextGrid[k-1][0];
+            int diagonal_above = nextGrid[k-1][1];
+            int diagonal_below = nextGrid[k+1][1];
+            nextGrid[k][0] = diagonal_above + right + diagonal_below + above;
+        }
+        //fill in bottom edge
+        for (int k = 0; k <= previousSize + 1; k++) {
+            int left = (k-1 >= 0) ? nextGrid[previousSize + 1][k-1] : 0;
+            int above = nextGrid[previousSize][k];
+            int diagonal_left = (k-1 >= 0) ? nextGrid[previousSize][k-1] : 0;
+            int diagonal_right = (k <= previousSize) ? nextGrid[previousSize][k+1] : 0;
+            nextGrid[previousSize + 1][k] = left + diagonal_left + above + diagonal_right;
+        }
+
+        return nextGrid;
+    }
+
 
     public static int day3_sizeOfGridContaining(int targetValue, int[][] startWith) {
         int[][] nextGrid = day3_growGrid(startWith);
