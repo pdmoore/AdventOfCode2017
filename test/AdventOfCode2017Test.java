@@ -461,6 +461,13 @@ public class AdventOfCode2017Test {
     }
 
     @Test
+    public void day7_programNameNotConsistentLength() {
+        String line = "wjdkcjo (29) -> jdntuc, htaxf, edpqtnn";
+        String expected = "wjdkcjo";
+        assertEquals(expected, AdventOfCode2017.day7_extractProgramName(line));
+    }
+
+    @Test
     public void day7_1_nodesBeingSupported() {
         String line = "fwft (72) -> ktlj, cntj, xhth";
         List<String> expected = new ArrayList<>();
