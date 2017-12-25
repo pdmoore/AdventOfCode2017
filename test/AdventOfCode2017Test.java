@@ -487,7 +487,7 @@ public class AdventOfCode2017Test {
             allLines.add(line);
         }
 
-        String expected = "unknown";
+        String expected = "azqje";
         assertEquals(expected, AdventOfCode2017.day7_FindBottom(allLines));
     }
 }
