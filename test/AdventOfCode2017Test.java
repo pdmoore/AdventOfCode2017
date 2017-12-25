@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.event.AdjustmentEvent;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -443,5 +444,29 @@ public class AdventOfCode2017Test {
         int[] actual = AdventOfCode2017.day10_knotHash(length, inputLengths);
         int product = actual[0] * actual[1];
         assertEquals(7888, product);
+    }
+
+    @Test
+    public void day7_1_sampleData() throws IOException {
+        List<String> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day7_sample.txt"));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            allLines.add(line);
+        }
+
+        String expected = "tknk";
+        assertEquals(expected, AdventOfCode2017.day7_FindBottom(allLines));
+    }
+
+    @Test
+    public void day7_1_nodesBeingSupported() {
+        String line = "fwft (72) -> ktlj, cntj, xhth";
+        List<String> expected = new ArrayList<>();
+        expected.add("ktlj");
+        expected.add("cntj");
+        expected.add("xhth");
+        assertEquals(expected, AdventOfCode2017.day7_supportedNodes(line));
     }
 }

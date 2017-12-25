@@ -348,6 +348,31 @@ public class AdventOfCode2017 {
         return nextGrid;
     }
 
+    public static List<String> day7_supportedNodes(String line) {
+        int arrowIndex = line.indexOf("->");
+        String supportedNodes = line.substring(arrowIndex + 3);
+        List<String> nodes = Arrays.asList(supportedNodes.split("\\s*,\\s*"));
+        return nodes;
+    }
+
+    public static String day7_FindBottom(List<String> allLines) {
+        // Simple impl - ignore leaf nodes, locate parent node that is not referenced by other parent
+        String candidateParent = null;
+        List<String> NodesThatAreNotRoot = new ArrayList<>();
+        for (String line :
+                allLines) {
+            if (line.contains("->")) {
+                String lineRoot = line.substring(0, 4);
+                if (NodesThatAreNotRoot.contains(lineRoot) == false) {
+                    candidateParent = lineRoot;
+                }
+                List<String> supportedNodes = day7_supportedNodes(line);
+                NodesThatAreNotRoot.addAll(supportedNodes);
+            }
+        }
+        return candidateParent;
+    }
+
     public static class Day6Result {
         public int stepCount;
         public int cycleCount;
@@ -436,3 +461,4 @@ public class AdventOfCode2017 {
         return garbageCount;
     }
 }
+
