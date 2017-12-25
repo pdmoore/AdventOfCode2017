@@ -478,7 +478,6 @@ public class AdventOfCode2017Test {
     }
 
     @Test
-    @Disabled
     public void day7_1_puzzle() throws IOException {
         List<String> allLines = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader("data/day7.txt"));
