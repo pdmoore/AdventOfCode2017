@@ -362,20 +362,24 @@ public class AdventOfCode2017 {
 
     public static String day7_FindBottom(List<String> allLines) {
         // Simple impl - ignore leaf nodes, locate parent node that is not referenced by other parent
-        String candidateParent = null;
+        List<String> candidateRoots = new ArrayList<>();
         List<String> NodesThatAreNotRoot = new ArrayList<>();
         for (String line :
                 allLines) {
             if (line.contains("->")) {
                 String lineRoot = day7_extractProgramName(line);
                 if (NodesThatAreNotRoot.contains(lineRoot) == false) {
-                    candidateParent = lineRoot;
+                    candidateRoots.add(lineRoot);
                 }
                 List<String> supportedNodes = day7_supportedNodes(line);
                 NodesThatAreNotRoot.addAll(supportedNodes);
             }
         }
-        return candidateParent;
+        for (String candidateRoot :
+                candidateRoots) {
+            if (NodesThatAreNotRoot.contains(candidateRoot) == false) return candidateRoot;
+        }
+        return null;
     }
 
     public static class Day6Result {

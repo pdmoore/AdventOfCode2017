@@ -476,4 +476,19 @@ public class AdventOfCode2017Test {
         expected.add("xhth");
         assertEquals(expected, AdventOfCode2017.day7_supportedNodes(line));
     }
+
+    @Test
+    @Disabled
+    public void day7_1_puzzle() throws IOException {
+        List<String> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day7.txt"));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            allLines.add(line);
+        }
+
+        String expected = "unknown";
+        assertEquals(expected, AdventOfCode2017.day7_FindBottom(allLines));
+    }
 }
