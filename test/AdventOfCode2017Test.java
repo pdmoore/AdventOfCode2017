@@ -216,8 +216,12 @@ public class AdventOfCode2017Test {
         int[][] seed = new int[][] { {1} };
         int[][] nextGrid = AdventOfCode2017.day3_growGridBySum(seed);
         int target = 361527;
-        while (true) {
-            nextGrid = AdventOfCode2017.day3_huntForTarget(target, nextGrid);
+        try {
+            while (true) {
+                nextGrid = AdventOfCode2017.day3_huntForTarget(target, nextGrid);
+            }
+        } catch (RuntimeException e) {
+            assertEquals(363010, Integer.parseInt(e.getMessage()));
         }
     }
 
