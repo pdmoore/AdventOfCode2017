@@ -360,6 +360,12 @@ public class AdventOfCode2017 {
         return line.substring(0, ParenIndex - 1);
     }
 
+    public static int day7_extractProgramWeight(String line) {
+        int leftParenIndex = line.indexOf("(");
+        int rightParenIndex = line.indexOf(")");
+        return Integer.parseInt(line.substring(leftParenIndex + 1, rightParenIndex));
+    }
+
     public static String day7_FindBottom(List<String> allLines) {
         // Simple impl - ignore leaf nodes, locate parent node that is not referenced by other parent
         List<String> candidateRoots = new ArrayList<>();
@@ -380,6 +386,91 @@ public class AdventOfCode2017 {
             if (NodesThatAreNotRoot.contains(candidateRoot) == false) return candidateRoot;
         }
         return null;
+    }
+
+    public static class day7Node {
+        String name;
+        int weight;
+        int level;
+        int weightOfChildren;
+        List<String> childrenNames;
+        public String parent;
+
+        public day7Node(String name, int weight) {
+            this.name = name;
+            this.weight = weight;
+            this.parent = "";
+            childrenNames = new ArrayList<>();
+        }
+
+        @Override
+        public String toString() {
+            String result = name + "(" + weight + ") level: " + level;
+            if (!parent.isEmpty()) result += "  parent: " + parent;
+            if (!childrenNames.isEmpty()) {
+                result += "  weightChildren: " + weightOfChildren;
+                int nodeWeight = weight + weightOfChildren;
+                result += "  weight + kids:  " + nodeWeight;
+            }
+            return result + "\n";
+        }
+    }
+
+    public static Collection<day7Node> day7_2_createTree(List<String> allLines) {
+        Map<String, day7Node> nodeMap = new HashMap<>();
+
+        // put all the nodes and their weight in nodeMap
+        for (String line :
+                allLines) {
+            String programName = day7_extractProgramName(line);
+            int programWeight  = day7_extractProgramWeight(line);
+
+            day7Node node = new day7Node(programName, programWeight);
+            nodeMap.put(programName, node);
+        }
+
+        // build parent-child associations
+        for (String line : allLines) {
+            if (line.contains("->")) {
+                String programName = day7_extractProgramName(line);
+                List<String> supportedNodes = day7_supportedNodes(line);
+
+                day7Node parentNode = nodeMap.get(programName);
+                parentNode.childrenNames.addAll(supportedNodes);
+
+                for (String eachSupportedNode : supportedNodes) {
+                    day7Node thisNode = nodeMap.get(eachSupportedNode);
+                    thisNode.level = parentNode.level + 1;
+                    thisNode.parent = programName;
+                    if (!thisNode.childrenNames.isEmpty()) {
+                        for (String childName :
+                                thisNode.childrenNames) {
+                            day7Node childNode = nodeMap.get(childName);
+                            childNode.level += 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int level = 1; level >= 0; level--) {
+            Set<String> programNames = nodeMap.keySet();
+            for (String programName :
+                    programNames) {
+                day7Node thisNode = nodeMap.get(programName);
+                int weightOfChildren = 0;
+                for (String childName :
+                        thisNode.childrenNames) {
+                    day7Node childNode = nodeMap.get(childName);
+                    if (childNode.level == level + 1) {
+                        weightOfChildren += childNode.weight;
+                    }
+                }
+                thisNode.weightOfChildren += weightOfChildren;
+            }
+        }
+
+        return nodeMap.values();
     }
 
     public static class Day6Result {

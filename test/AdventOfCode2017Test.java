@@ -6,10 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -468,6 +465,13 @@ public class AdventOfCode2017Test {
     }
 
     @Test
+    public void day7_programWeight() {
+        String line = "wjdkcjo (29) -> jdntuc, htaxf, edpqtnn";
+        int expected = 29;
+        assertEquals(expected, AdventOfCode2017.day7_extractProgramWeight(line));
+    }
+
+    @Test
     public void day7_1_nodesBeingSupported() {
         String line = "fwft (72) -> ktlj, cntj, xhth";
         List<String> expected = new ArrayList<>();
@@ -489,5 +493,21 @@ public class AdventOfCode2017Test {
 
         String expected = "azqje";
         assertEquals(expected, AdventOfCode2017.day7_FindBottom(allLines));
+    }
+
+    @Test
+//    @Disabled
+    public void day7_2_createTree() throws IOException {
+        List<String> allLines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader("data/day7_sample`.txt"));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            allLines.add(line);
+        }
+
+        Collection<AdventOfCode2017.day7Node> nodes = AdventOfCode2017.day7_2_createTree(allLines);
+        assertEquals(13, nodes.size());
+        System.out.println(nodes.toString());
     }
 }
